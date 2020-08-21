@@ -45,7 +45,7 @@ $('#createOutput').click(() => {
     uzip = pako.inflate(binary)
     console.log("uzip", uzip)
     zip = pako.deflate(uzip, {level: 9})
-    newBPStr = Base64.encode(zip)
+    newBPStr = Base64.encodeU(zip)
 
     console.log(newBPStr)
 
