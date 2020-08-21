@@ -29,27 +29,16 @@ $('#createOutput').click(() => {
     VERSION = encodedBP.charAt(0)
     encodedBP = encodedBP.substring(1)
     // console.log(encodedBP)
-
-    let decoded = Base64.decode(encodedBP)
-    let uzip = pako.inflate(decoded)
-    let str = new TextDecoder("utf-8").decode(uzip)
-    let bookJson = JSON.parse(str)
-    let json = JSON.stringify(bookJson)
-    let enc =  new TextEncoder("utf-8").encode(json)
-    let zip = pako.deflate(json, {level: 9})
-    let newBPStr = Base64.encodeU(zip)
-
-    console.log(encodedBP)
-    let binary = Base64.decode(encodedBP)
-    console.log("binary", binary)
-    uzip = pako.inflate(binary)
+    let uzip = pako.inflate(atob(encodedBP))
     console.log("uzip", uzip)
-    zip = pako.deflate(uzip, {level: 9})
-    newBPStr = Base64.encodeU(zip)
 
-    console.log(newBPStr)
+    let str = new TextDecoder("utf-8").decode(uzip)
+    console.log("str", str)
 
-    $('#outputText').val(VERSION + newBPStr)
+    let bookJson = JSON.parse(str)
+
+
+
     // console.log(buildArrayDiff(uzip, enc))
 
 
@@ -64,7 +53,7 @@ $('#createOutput').click(() => {
 
     
 
-    return
+    
 
     let initialBP = JSON.parse(str)
     console.log(initialBP)
@@ -75,18 +64,21 @@ $('#createOutput').click(() => {
 
     let newBook = {}
     if (bookJson.blueprint_book) {
-        // newBook.blueprint_book = sortBlueprintBook(bookJson.blueprint_book)
+        newBook.blueprint_book = sortBlueprintBook(bookJson.blueprint_book)
         // console.log(newBook)
         // let newBPjson =JSON.stringify(newBook))
-        let json = JSON.stringify(bookJson)
+        let json = JSON.stringify(newBook)
         console.log("json", json)
         let enc =  new TextEncoder("utf-8").encode(json)
         console.log("enc", enc)
-        let zip = pako.gzip(json, {level: 9})
+        let zip = pako.deflate(json, {level: 9})
         console.log("zip", zip)
-        let newBPStr = btoa(zip)
-        // console.log("b64", newBPS)
+        let newBPStr = Base64.encodeU(zip)
+    
+        console.log(newBPStr)
+        
         $('#outputText').val(VERSION + newBPStr)
+        
     }
     // else 
      // console.log("NOT A BLUEPRINT BOOK!")
