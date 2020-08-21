@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" , class="h-100">
+
+<head>
+    <!-- Refresh on change -->
+    <script type="text/javascript" src="http://livejs.com/live.js"></script>
+  
+    <!-- COOKIES 🍪🍪🍪🍪🍪 -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <!-- Pako, for zlib inflate/deflate -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script> -->
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+    <!-- meta lol -->
+    <meta property="og:title" content="Space Engineers Thruster Calculator" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://343n.github.io/spaceengineers-thrust-calc/" />
+    <meta property="og:image" content="https://343n.github.io/spaceengineers-thrust-calc/metaimage.png" />
+    <meta property="og:description" content="You'll never guess how many thrusters you need on your ship... Click here to find out!" />
+    
+    <title>Factorio Blueprint Book Sorter</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+    <nav class="navbar navbar-dark bg-dark " style="margin-bottom: 100px;">
+        <div class="container">
+        <a class="navbar-brand" href="#">Factorio Blueprint Book Sorter</a>
+    </div>
+    </nav>
+
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            <div class="row">
+                <!-- input card -->
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Blueprint Book String </h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Put your blueprint book in below to sort your blueprint book in alphanumeric order (as well as any blueprint books within it)</p>
+                            
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">Blueprint String</span>
+                                </div>
+                                <textarea class="form-control" id="inputStringArea" aria-label=""></textarea>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <label class="input-group-text" for="blueprintBookPlacement" data-toggle="tooltip" title="How blueprint books will be sorted">Blueprint Book Placement</label>
+                                </div>
+                                <select class="custom-select" id="blueprintBookPlacement">
+                                  <option value="0">Start of book</option>
+                                  <option value="1">Inbetween blueprints</option>
+                                  <option value="2">End of book</option>
+                                </select>
+                              </div>
+                            <button href="#" id="createOutput" class="btn btn-primary">Sort Blueprint!</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <!-- input card -->
+                
+                
+                <!-- output card -->
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Output</h3>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Blueprint String</span>
+                                    </div>
+                                    <textarea id="outputText" class="form-control" readonly>Nothing!</textarea>
+                                </div>
+                                <button href="#" class="btn btn-primary" id="copyOutput">Copy to Clipboard!</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- output card -->
+
+
+                <!-- changelog -->
+                <!-- changelog -->
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3" style="background-color: #f5f5f5;">
+        <div class="container text-center text-muted">
+            Made with &#x2764 by 343N
+        </div>
+    </footer>
+
+    <script src="base64.js"></script>
+    <script src="index.js"></script>
+    <script src="pako.js"></script>
+
+    <!--card end-->
+
+
+</body>
+
+</html>
