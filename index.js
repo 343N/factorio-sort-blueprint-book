@@ -28,24 +28,34 @@ $('#createOutput').click(() => {
     
     VERSION = encodedBP.charAt(0)
     encodedBP = encodedBP.substring(1)
+    // console.log(encodedBP)
+
+    let decoded = Base64.decode(encodedBP)
+    let uzip = pako.inflate(decoded)
+    let str = new TextDecoder("utf-8").decode(uzip)
+    let bookJson = JSON.parse(str)
+    let json = JSON.stringify(bookJson)
+    let enc =  new TextEncoder("utf-8").encode(json)
+    let zip = pako.deflate(json, {level: 9})
+    let newBPStr = Base64.encodeU(zip)
+
     console.log(encodedBP)
     let binary = Base64.decode(encodedBP)
     console.log("binary", binary)
-    let uzip = pako.inflate(binary)
+    uzip = pako.inflate(binary)
     console.log("uzip", uzip)
-    let zip = pako.deflate(uzip, {level: 9})
-    let newBPStr = Base64.encode(zip)
-    // let str = new TextDecoder("utf-8").decode(uzip)
-    // console.log("str", str)
-    // let enc = new TextEncoder("utf-8").encode(str)
-    // console.log("enc", enc)
+    zip = pako.deflate(uzip, {level: 9})
+    newBPStr = Base64.encode(zip)
+
+    console.log(newBPStr)
+
     $('#outputText').val(VERSION + newBPStr)
     // console.log(buildArrayDiff(uzip, enc))
 
 
-    let bookJson = JSON.parse(str)
+    // let bookJson = JSON.parse(str)
 
-    let json = JSON.stringify(bookJson, null)
+    // let json = JSON.stringify(bookJson, null)
     // console.log("json", json)
     // console.log("zip", zip)
     // let newBPStr = btoa(zip)
@@ -160,85 +170,85 @@ function sortBlueprintBook(book){
 // all of this was based on the notion that i had to remove
 // the first byte from the b64 string, not remove the version byte at the
 // start of the string (aka the 0)
-function getB64value(char){
-    let b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+// function getB64value(char){
+//     let b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
-    console.log(b64.indexOf(char))
-    return b64.indexOf(char)
-}
+//     console.log(b64.indexOf(char))
+//     return b64.indexOf(char)
+// }
 
-function getB64char(value){
-    let b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-    console.log(b64.charAt(value))
-    return b64.charAt(value)
+// function getB64char(value){
+//     let b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+//     console.log(b64.charAt(value))
+//     return b64.charAt(value)
 
-}
+// }
 
-function getB64asBinary(value){
-    // let binarystring = 
-    return (getB64value(value)).toString(2).padStart(6, '0')
-}
+// function getB64asBinary(value){
+//     // let binarystring = 
+//     return (getB64value(value)).toString(2).padStart(6, '0')
+// }
 
-function getB64fromBinary(value){
+// function getB64fromBinary(value){
     
-    if (value.length > 6) {
-        let string = ""
-        let debugString = ""
-        for (let i = 0; i < value.length; i += 6){
-            let portion = value.slice(i, Math.min(i + 6, value.length))
-            debugString += portion + " | "
-        }
-        console.log(debugString)
-        // for ()
-        for (let i = 0; i < value.length; i += 6){
-            let portion = value.slice(i, Math.min(i + 6, value.length))
-            console.log("Portion: " + portion)
-            string += getB64fromBinary(portion)
-        }
-        // console.log(string)
-        return string
-    }
+//     if (value.length > 6) {
+//         let string = ""
+//         let debugString = ""
+//         for (let i = 0; i < value.length; i += 6){
+//             let portion = value.slice(i, Math.min(i + 6, value.length))
+//             debugString += portion + " | "
+//         }
+//         console.log(debugString)
+//         // for ()
+//         for (let i = 0; i < value.length; i += 6){
+//             let portion = value.slice(i, Math.min(i + 6, value.length))
+//             console.log("Portion: " + portion)
+//             string += getB64fromBinary(portion)
+//         }
+//         // console.log(string)
+//         return string
+//     }
     
-    else {
-        console.log("Converting 6-digit binary to int: " +getB64char(parseInt(value, 2)) )
-        return getB64char(parseInt(value, 2))
-    }
-}
+//     else {
+//         console.log("Converting 6-digit binary to int: " +getB64char(parseInt(value, 2)) )
+//         return getB64char(parseInt(value, 2))
+//     }
+// }
 
-function getB64StringAsBinary(string){
-    let sum = ""
-    for (let i = 0; i < string.length; i++)
-        sum += getB64asBinary(string.charAt(i))
+// function getB64StringAsBinary(string){
+//     let sum = ""
+//     for (let i = 0; i < string.length; i++)
+//         sum += getB64asBinary(string.charAt(i))
 
-    return sum
-}
+//     return sum
+// }
 
 
-function getStringB64Value(string){
-    let sum = 0
-    for (let i = 0; i < string.length; i++)
-        sum += getB64value(string.charAt(i))
+// function getStringB64Value(string){
+//     let sum = 0
+//     for (let i = 0; i < string.length; i++)
+//         sum += getB64value(string.charAt(i))
 
-    return sum
-}
+//     return sum
+// }
 
-function getStringAsciiValue(string){
-    let sum = 0
-    for (let i = 0; i < string.length; i++)
-        sum += string.charCodeAt(i)
+// function getStringAsciiValue(string){
+//     let sum = 0
+//     for (let i = 0; i < string.length; i++)
+//         sum += string.charCodeAt(i)
 
-    return sum
-}
+//     return sum
+// }
 
-function stripBitsFromB64(b64, bitlength){
-    if (!bitlength || bitlength == NaN) throw "No bitlength specified!"
-    let binary = getB64StringAsBinary(b64)
-    binary = binary.substr(bitlength)
+// function stripBitsFromB64(b64, bitlength){
+//     if (!bitlength || bitlength == NaN) throw "No bitlength specified!"
+//     let binary = getB64StringAsBinary(b64)
+//     binary = binary.substr(bitlength)
 
-    return getB64fromBinary(binary)        
-}
+//     return getB64fromBinary(binary)        
+// }
 
-function getBitsFromB64(b64, bitlength){
-    let binary = getB64StringAsBinary(b64)
-    return binary.substr(bitlength)
-}
+// function getBitsFromB64(b64, bitlength){
+//     let binary = getB64StringAsBinary(b64)
+//     return binary.substr(bitlength)
+// }
