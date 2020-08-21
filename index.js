@@ -65,17 +65,18 @@ $('#createOutput').click(() => {
     let newBook = {}
     if (bookJson.blueprint_book) {
         newBook.blueprint_book = sortBlueprintBook(bookJson.blueprint_book)
-        // console.log(newBook)
+
+        console.log(newBook)
         // let newBPjson =JSON.stringify(newBook))
         let json = JSON.stringify(newBook)
-        console.log("json", json)
+        // console.log("json", json)
         let enc =  new TextEncoder("utf-8").encode(json)
-        console.log("enc", enc)
+        // console.log("enc", enc)
         let zip = pako.deflate(json, {level: 9})
-        console.log("zip", zip)
+        // console.log("zip", zip)
         let newBPStr = Base64.encodeU(zip)
     
-        console.log(newBPStr)
+        // console.log(newBPStr)
         
         $('#outputText').val(VERSION + newBPStr)
         
@@ -109,7 +110,7 @@ function sortBlueprintBook(book){
             switch(BLUEPRINT_BOOK_PLACEMENT){
                 case 0:
                 case 2:
-                    book.blueprints = book.blueprints.filter((e) => books.includes(e))
+                    book.blueprints = book.blueprints.filter((e) => !books.includes(e))
                     break;
             }        
 
@@ -119,11 +120,11 @@ function sortBlueprintBook(book){
     
     book.blueprints.sort((a, b) => {
         firstLabel = (a.blueprint) ? a.blueprint.label : a.blueprint_book.label
-        secondLabel = (a.blueprint) ? b.blueprint.label : b.blueprint_book.label
+        secondLabel = (b.blueprint) ? b.blueprint.label : b.blueprint_book.label
         return firstLabel.localeCompare(secondLabel, {numeric: true})
     })
         
- // console.log(books)
+    // console.log(book.blueprints)
     if (BLUEPRINT_BOOK_PLACEMENT == 0)
         books.sort((a, b) => {
          // console.log(a)
@@ -154,6 +155,7 @@ function sortBlueprintBook(book){
 
      // console.log(e.label)
     }
+    // console.log(book.blueprints)
 
     return book
 }
