@@ -1,3 +1,4 @@
+
 // init tooltips
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -117,24 +118,38 @@ function sortBlueprintBook(book){
         }        
     }
     
+    get_label = (a) => {
+        prop =  (a.blueprint) ? a.blueprint : 
+                (a.blueprint_book) ? a.blueprint_book : 
+                (a.upgrade_planner) ? a.upgrade_planner : 
+                (a.deconstruction_planner) ? a.deconstruction_planner : a;
+        // console.log(a)
+        return prop != undefined ? 
+                (prop.hasOwnProperty("label") ? prop.label : 
+                prop.hasOwnProperty("version") ? `${prop.version}` : "") : "";
+    }
     
     book.blueprints.sort((a, b) => {
-        firstLabel = (a.blueprint) ? a.blueprint.label : a.blueprint_book.label
-        secondLabel = (b.blueprint) ? b.blueprint.label : b.blueprint_book.label
+        firstLabel  = get_label(a)
+        secondLabel = get_label(b)
         return firstLabel.localeCompare(secondLabel, {numeric: true})
     })
+
         
     // console.log(book.blueprints)
     if (BLUEPRINT_BOOK_PLACEMENT == 0)
         books.sort((a, b) => {
-         // console.log(a)
-         // console.log(b)
+            if (!b.blueprint_book.label) return 1
+            if (!a.blueprint_book.label) return -1
+            
             return b.blueprint_book.label.localeCompare(a.blueprint_book.label, {numeric: true})
         })
-    else if (BLUEPRINT_BOOK_PLACEMENT == 2)
+        else if (BLUEPRINT_BOOK_PLACEMENT == 2)
         books.sort((a, b) => {
-         // console.log(a)
-         // console.log(b)
+            // console.log(a)
+            // console.log(b)
+            if (!b.blueprint_book.label) return 1
+            if (!a.blueprint_book.label) return -1
             return a.blueprint_book.label.localeCompare(b.blueprint_book.label, {numeric: true})
         })
     for (let e of books){
@@ -149,9 +164,9 @@ function sortBlueprintBook(book){
 
     for (let i in book.blueprints){
         book.blueprints[i].index = i
-        let e = (book.blueprints[i].blueprint) ? 
-            book.blueprints[i].blueprint : 
-            book.blueprints[i].blueprint_book
+        // let e = (book.blueprints[i].blueprint) ? 
+        //     book.blueprints[i].blueprint : 
+        //     book.blueprints[i].blueprint_book
 
      // console.log(e.label)
     }
